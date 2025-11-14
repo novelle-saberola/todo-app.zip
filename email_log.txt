@@ -1,0 +1,4 @@
+To: novellesaberola20@gmail.com
+Subject: Password Reset
+Message: Click: http://localhost/todo-app/reset_password.php?token=715ebb1c683e662db00010468c3f9faa77b26918fdc8dee6cc8f5d21326589b4
+
