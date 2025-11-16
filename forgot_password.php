@@ -95,6 +95,10 @@ rel="stylesheet">
         height: 100%;
     }
 
+    .form-comtrol {
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(118, 75, 162, 0.3); 
+    }
 
 </style>
 
@@ -106,7 +110,7 @@ rel="stylesheet">
                 <h3>Forgot Password</h3>
                 <?php echo $message; ?>
                 <form method="POST">
-                    <div class="mb-3"><label>  Email</label><input type="email" name="email" class="formcontrol" required></div>
+                    <div class="mb-3"><label>Email</label><input type="email" name="email" class="form-control" required></div>
                     <button type="submit" class="btn btn-warning w-100">Send Reset Link</button>
                 </form>
                 <p class="mt-3"><a href="index.php">Back to Login</a></p>

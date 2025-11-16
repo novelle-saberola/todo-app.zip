@@ -33,17 +33,47 @@ now</a></div>';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 rel="stylesheet">
     <script src="assets/validation.js"></script>
+    <style>
+        * {font-family: 'Times New Roman', sans-serif;  }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 400px;
+            width: 100%;
+            transition: transform 0.3s ease;
+            padding: 1.75rem;
+        }
+
+        h2 {
+            font-family: 'Times New Roman', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>    
 </head>
 <body class="bg-light">
 <div class="container mt-5">
-    <div class="card shadow">
+    <div class="card-shadow">
         <div class="card-body">
             <h2 class="text-center">Register</h2>
             <?php echo $message; ?>
             <form method="POST">
                 <div class="mb-3"><label>Username</label><input type="text" name="username"
 class="form-control" required></div>
-                <div class="mb-3"><label>Email</label><input type="email" name="email" class="formcontrol" required></div>
+                <div class="mb-3"><label>Email</label><input type="email" name="email" class="form-control" required></div>
                 <div class="mb-3"><label>Password</label><input type="password" name="password"
 class="form-control" required></div>
                 <div class="mb-3"><label>Confirm</label><input type="password"

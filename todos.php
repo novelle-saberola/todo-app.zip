@@ -112,6 +112,116 @@ $cats = $stmt_cats->fetchAll();
 <html><head><title>TODOs</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+    * {
+        font-family: 'Times New Roman', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+    }
+
+    .card, .modal-content {
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        overflow: hidden;
+        background: #ead2feff;
+        color: #321c32ff;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover, .modal-content:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-header, .modal-header {
+        background: #764ba2;
+        color: white;
+        font-weight: bold;
+        border-bottom: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        transition: 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        border: none;
+        transition: 0.3s ease;
+    }
+
+    .btn-success:hover {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+
+    input.form-control, select.form-select, textarea.form-control {
+        border: 1px solid #d8b5ff;
+        background: #f7eaff;
+        border-radius: 10px;
+        padding: 8px;
+        transition: 0.3s ease;
+    }
+
+    input.form-control:focus, select.form-select:focus, textarea.form-control:focus {
+        outline: none;
+        box-shadow: 0 0 8px rgba(118,75,162,0.4);
+        border-color: #764ba2;
+    }
+
+    table.table {
+        background: #ead2feff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow
+    }
+
+    .table-striped {
+        min-height: 50vh;
+    }
+
+    /* DARK MODE */
+    body.dark {
+        background: #121212 !important;
+        color: #eaeaea !important;
+    }
+
+    body.dark .card,
+    body.dark .login-card {
+        background: #1e1e1e !important;
+        color: #fff !important;
+        box-shadow: 0 0 20px rgba(255,255,255,0.05);
+    }
+
+    body.dark .form-control {
+        background: #2c2c2c;
+        color: #fff;
+        border: 1px solid #444;
+    }
+
+    body.dark .navbar {
+        background: #1b1b1b !important;
+    }
+
+    body.dark .btn {
+        border-color: #888 !important;
+    }
+
+    body.dark a { color: #9bbcff !important; }
+
+</style>
 </head><body>
 <?php include 'navbar.php'; ?>
 <div class="container mt-5">
@@ -142,8 +252,14 @@ Categories</option>
     <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addModal">+ Add
 Task</button>
     <table class="table table-striped">
-
-<thead><tr><th>Title</th><th>Status</th><th>Due</th><th>File</th><th>Actions</th></tr></thead>
+<thead><tr>
+    <th>Title</th>
+    <th>Status</th>
+    <th>Due</th>
+    <th>File</th>
+    <th>Countdown</th>
+    <th>Actions</th>
+</tr></thead>
         <tbody>
             <?php foreach ($todos as $t): ?>
             <tr>
@@ -155,6 +271,13 @@ $t['status']=='completed'?'success':($t['status']=='in_progress'?'info':'warning
                 <td><?php echo $t['due_date'] ?: '—'; ?></td>
                 <td><?php echo $t['attachment'] ? '<a href="'.$t['attachment'].'"
 target="_blank">View</a>' : '—'; ?></td>
+
+                <td>
+                    <span class="countdown" data-due="<?php echo $t['due_date']; ?>">
+                        <?php echo $t['due_date'] ?: '—'; ?>
+                    </span>
+                 </td>
+
                 <td>
                     <button class="btn btn-sm btn-primary" onclick='editTodo(<?php echo
 json_encode($t); ?>)' data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
@@ -212,6 +335,32 @@ t.priority);
     document.querySelector('#editModal [name="due_date"]').value = t.due_date;
     document.querySelector('#editModal [name="category_id"]').value = t.category_id || '';
 }
+
+function updateCountdowns() {
+    document.querySelectorAll('.countdown').forEach(span => {
+        const due = span.dataset.due;
+        if(!due) return;
+        const dueTime = new Date(due).getTime();
+        const now = new Date().getTime();
+        const diff = dueTime - now;
+
+        if(diff <= 0){
+            span.textContent = "Overdue";
+            span.style.color = "red";
+            return;
+        }
+
+        const d = Math.floor(diff / (1000*60*60*24));
+        const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+        const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+        const s = Math.floor((diff % (1000*60)) / 1000);
+
+        span.textContent = `${d}d ${h}h ${m}m ${s}s`;
+    });
+}
+setInterval(updateCountdowns, 1000);
+updateCountdowns();
+</script>
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body></html>

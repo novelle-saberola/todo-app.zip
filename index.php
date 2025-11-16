@@ -89,6 +89,53 @@ rel="stylesheet">
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
+        
+
+        body.dark {
+            background: linear-gradient(135deg, #1f1f1f 0%, #121212 100%);
+            color: #eaeaea;
+        }
+
+        .dark .login-card {
+            background: #1e1e1e;
+            box-shadow: 0 20px 40px rgba(255,255,255,0.08);
+        }
+
+        .dark .card-header {
+            background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);
+        }
+
+        .dark .form-control {
+            background: #2c2c2c;
+            color: white;
+            border: 1px solid #444;
+        }
+
+        .dark a { color: #9bbcff; }
+        .dark .btn-login {
+            background: linear-gradient(135deg, #4e4376 0%, #2b5876 100%);
+        }
+        
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if(localStorage.getItem("darkMode") === "enabled"){
+                document.body.classList.add("dark");
+            }
+        });
+
+        function toggleDarkMode(){
+            document.body.classList.toggle("dark");
+
+            if(document.body.classList.contains("dark")){
+                localStorage.setItem("darkMode", "enabled");
+            } else {
+                localStorage.removeItem("darkMode");
+            }
+        }
+        </script>
+
+
 
     </style>
 </head>
